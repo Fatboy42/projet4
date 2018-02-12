@@ -1,0 +1,18 @@
+ml_front_homepage:
+    path:     /
+    defaults: { _controller: MLFrontBundle:Reservation:addReservation }
+
+
+ml_front_recap:
+    path:     /recap
+    defaults: { _controller: MLFrontBundle:Recap:viewRecap }
+
+
+ml_front_modif:
+    path:    /modif
+    defaults: { _controller: MLFrontBundle:Modif:modif }
+
+
+ml_front_pay:
+    path:    /pay
+    defaults: { _controller: MLFrontBundle:CheckOut:checkOut }

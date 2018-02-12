@@ -1,0 +1,48 @@
+{% extends 'MLFrontBundle:layout:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - Recapitulatif{% endblock %}
+
+{% block body %}
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+
+<div class="alert alert-danger" role="alert">
+  {{ flashMessage }}
+</div>
+
+{% endfor %}
+
+{% dump reservation %}
+
+<h2>Recapitulatif</h2>
+
+<h3>Reservation :</h3>
+
+<p>Prenom : {{ reservation.firstname }}</p>
+<p>Nom : {{ reservation.lastname }}</p>
+<p>Date de reservation : {{ reservation.dateform|date('d/m/Y') }}</p>
+<p>Formule : {{ reservation.reservationtype.name }}</p>
+<p>Adresse mail : {{ reservation.mail }}</p>
+
+<h3>Tickets :</h3>
+
+{% for tickets in reservation.tickets %}
+  <p> Prénom : {{ tickets.firstname }}</p>
+  <p> Nom : {{ tickets.lastname }}</p>
+  <p>Date de naissance : {{ tickets.birthdate|date('d/m/Y') }}</p>
+  <p>Age : {{ tickets.age }}</p>
+  <p>Prix : {{ tickets.price }}</p>
+  {% if tickets.student == true %}
+    <strong> <p>Le tarif réduit est appliqué sur ce ticket</p> </strong>
+  {% else %}
+    <strong> <p>Le tarif réduit n'est pas appliqué sur ce ticket</p> </strong>
+  {% endif %}
+{% endfor %}
+
+<strong><p>Prix Total : {{ reservation.totalprice }}€</p></strong>
+
+<a href="/app_dev.php/modif" class="btn btn-danger">Modifier</a>
+<a href="/app_dev.php/pay" class="btn btn-danger">Payer</a>
+
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'MLFrontBundle:layout:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - Recapitulatif{% endblock %}
+
+{% block body %}
+
+{% for flashMessage in app.session.flashbag.get('success') %}
+
+<div class="alert alert-success" role="alert">
+  {{ flashMessage }}
+</div>
+
+{% endfor %}
+
+<h1>Merci !</h1>
+
+<h3>Votre réservation à bien été prise en compte</h3>
+
+<p>Votre réservation a ete prise en compte et un mail viens de vous etre envoyé à {{ mail }}, si vous ne le voyez pas, regardez dans vos spams. Merci !</p>
+
+{% endblock %}

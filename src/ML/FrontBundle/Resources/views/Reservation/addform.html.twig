@@ -1,0 +1,115 @@
+
+{% extends 'MLFrontBundle:layout:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - Reservation{% endblock %}
+
+ {% block body %}
+
+ {% for flashMessage in app.session.flashbag.get('alert') %}
+
+ <div class="alert alert-danger" role="alert">
+   {{ flashMessage }}
+ </div>
+
+ {% endfor %}
+
+ <h1 class="cover-heading">Reservation</h1>
+ <p class="lead">
+
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+{{ form_errors(form) }}
+
+{{ form_row(form.firstname) }} {# Generation automatique du champ du formulaire (label, erreurs, widget)#}
+
+{{ form_row(form.lastname) }}
+
+{{ form_row(form.reservationtype) }}
+
+{{ form_row(form.dateform) }}
+
+{{ form_row(form.mail) }}
+
+<a href="#" id="add_ticket" class="btn btn-success">Ajouter</a>
+{{ form_row(form.tickets) }}
+
+
+{{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+{{ form_rest(form) }}
+
+{{ form_end(form) }}
+
+
+ </p>
+
+{% block javascript %}
+
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+ <script type="text/javascript">
+
+$(document).ready(function()
+{
+  var $container = $('div#form_tickets');
+
+  var index = $container.find(':input').length;
+
+  $('#add_ticket').click(function(e){
+    addTicket($container);
+
+    e.preventDefault();
+    return false;
+  });
+
+  if (index == 0)
+  {
+    addTicket($container);
+  }
+  else
+  {
+    $container.children('div').each(function(){
+      addDeleteLink($(this));
+    });
+  }
+
+  function addTicket($container)
+  {
+    var template = $container.attr('data-prototype')
+      .replace(/__name__label__/g, 'Ticket n°' + (index+1))
+      .replace(/__name__/g, index)
+      ;
+
+    var $prototype = $(template);
+
+    addDeleteLink($prototype);
+
+    $container.append($prototype);
+
+    index++;
+  }
+
+
+  function addDeleteLink($prototype)
+  {
+    var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+    $prototype.append($deleteLink);
+
+    $deleteLink.click(function(e){
+      $prototype.remove();
+
+      e.preventDefault();
+
+      return false;
+    });
+  }
+
+});
+
+
+ </script>
+
+{% endblock %}
+
+ {% endblock %}

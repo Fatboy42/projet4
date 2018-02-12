@@ -1,0 +1,59 @@
+{% extends 'MLFrontBundle:layout:layout.html.twig' %}
+{% block body %}
+
+<h3>Votre reservation</h3>
+
+<table class="table">
+  <thead>
+     <tr>
+       <th scope="col">ID</th>
+       <th scope="col">Prénom</th>
+       <th scope="col">Nom</th>
+       <th scope="col">Date</th>
+       <th scope="col">Formule</th>
+       <th scope="col">Prix TTC</th>
+     </tr>
+  </thead>
+   <tbody>
+     <th scope="row"> {{ reservation.uniqid }} </th>
+     <th>{{ reservation.firstname }}</th>
+     <th>{{ reservation.lastname }}</th>
+     <th>{{ reservation.dateform|date('d/m/Y') }}</th>
+     <th>{{ reservation.reservationtype.name }}</th>
+     <th>{{ reservation.totalprice }}€</th>
+   </tbody>
+</table>
+
+
+<h3>Tickets</h3>
+<table class="table">
+  <thead>
+     <tr>
+       <th scope="col">ID</th>
+       <th scope="col">Prénom</th>
+       <th scope="col">Nom</th>
+       <th scope="col">Date de Naissance</th>
+       <th scope="col">Age</th>
+       <th scope="col">Prix Reduit</th>
+       <th scope="col">Prix</th>
+     </tr>
+  </thead>
+  {% for tickets in reservation.tickets %}
+  <tbody>
+    <th scope="row"> {{ tickets.uniqTickId }} </th>
+    <th>{{ tickets.firstname }}</th>
+    <th>{{ tickets.lastname }}</th>
+    <th>{{ tickets.birthdate|date('d/m/Y') }}</th>
+    <th>{{ tickets.age }}</th>
+    {% if tickets.student == true %}
+    <th>Oui</th>
+    {% else %}
+    <th>Non</th>
+    {% endif %}
+    <th>{{ tickets.price }}</th>
+  </tbody>
+  {% endfor %}
+
+</table>
+
+{% endblock %}

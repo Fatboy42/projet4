@@ -1,0 +1,29 @@
+services:
+   ml_frontbundle.validator.underonethousand:
+     class: ML\FrontBundle\Validator\UnderOneThousandValidator
+     arguments: [ "@ml_frontbundle.checkquantity" ] # Mettre service moins 1000 resa
+     tags:
+       - { name: validator.constraint_validator, alias: ml_frontbundle_underonethousand }
+
+   ml_frontbundle.date:
+     class: ML\FrontBundle\Date\MLDate
+     arguments: [ "@doctrine.orm.entity_manager", 1000 ]
+
+   ml_frontbundle.datemanager:
+     class: ML\FrontBundle\DateManager\MLDateManager
+     arguments: [ "@doctrine.orm.entity_manager" ]
+
+
+   ml_frontbundle.finalprocess:
+     class: ML\FrontBundle\FinalProcess\MLFinalProcess
+     arguments: [ "@doctrine.orm.entity_manager", "@mailer", "@twig" ]
+
+   ml_frontbundle.checkquantity:
+     class: ML\FrontBundle\CheckQuantity\MLCheckQuantity
+     arguments:  [ "@doctrine.orm.entity_manager" ]
+
+   ml_frontbundle.doctrine_listener.reservation_listener:
+     class: ML\FrontBundle\DoctrineListener\ReservationListener
+     #arguments: [ "@doctrine.orm.entity_manager" ]
+     tags:
+       - { name: doctrine.event_listener, event: onFlush }
